@@ -1,46 +1,24 @@
 package main
 
-import peg.Direction
-import peg.Move
-import peg.PegBoard
-import solver.PegSolver
-import java.util.*
-import java.util.concurrent.LinkedBlockingQueue
-import java.util.concurrent.Phaser
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeoutException
-import kotlin.collections.ArrayList
+import gui.PegBoardFrame
+import javax.swing.JFrame
+import javax.swing.SwingUtilities
 
 object Main {
 
+  lateinit var frame: PegBoardFrame
+
   @JvmStatic
   fun main(args: Array<String>) {
-    val board = PegBoard()
-    val solved = LinkedBlockingQueue<Array<Move>>()
-    val phaser = Phaser()
+    SwingUtilities.invokeLater {
+      frame = PegBoardFrame()
+      frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
 
-    val ps1 = PegSolver(board.movesPlayed.clone() as ArrayList<Move>, Move(3, 5, Direction.NORTH), solved, phaser)
-    ps1.fork()
+      Thread(Controller(frame)).start()
 
-
-    println("Starting to listen for solutions")
-
-    print("${phaser.registeredParties}: ")
-    while (true) {
-      try {
-        println(Arrays.toString(solved.poll(10000, TimeUnit.MILLISECONDS)))
-        print("${phaser.registeredParties}: ")
-      } catch (e: TimeoutException) {}
-
-      if (phaser.registeredParties < 50) {
-        println("Ending")
-        break
-      }
+      frame.isVisible = true
     }
 
-    ps1.join()
-    println(solved.remove())
   }
-
-
 }
+

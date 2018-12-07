@@ -1,28 +1,26 @@
 package gui
 
+import peg.Direction
 import peg.Move
 import peg.PegBoard
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 
-class FrameController(val frame: PegBoardFrame): Runnable, ActionListener {
+class GridController(val frame: PegBoardFrame, val moves: Array<Move>): Runnable {
 
   override fun run() {
-    while (true) {}
-  }
+    frame.run.isEnabled = false
 
-
-  override fun actionPerformed(e: ActionEvent?) {
-
-    val moves = frame.solutionsPanel.selectedValue as Array<Move>
-//    frame.move(moves)
     val board = PegBoard()
+    frame.redrawBoard(board)
+    Thread.sleep(800)
 
     for (move in moves) {
       board.move(move)
       frame.redrawBoard(board)
-      Thread.sleep(500)
+      Thread.sleep(800)
     }
+    frame.run.isEnabled = true
   }
 
 }
