@@ -137,7 +137,6 @@ class PegBoardFrame: JFrame(){
       }
       revalidate()
       repaint()
-      Thread.sleep(500)
     } finally {
       gridLock.unlock()
     }
@@ -161,7 +160,7 @@ object Thing {
   fun main(args: Array<String>) {
     SwingUtilities.invokeLater {
       frame = PegBoardFrame()
-      frame.isVisible = true
+      frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
 
       val moves = arrayOf(
         Move(3, 1, Direction.SOUTH),
@@ -174,6 +173,7 @@ object Thing {
       frame.run.addActionListener(controller)
 
       Thread(controller).start()
+      frame.isVisible = true
     }
   }
 }
