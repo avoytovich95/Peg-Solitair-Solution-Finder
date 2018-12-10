@@ -29,7 +29,8 @@ compileTestKotlin {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'main.Main'
+//        attributes 'Main-Class': 'main.Main'
+        attributes 'Main-Class': 'cluster.Main'
     }
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }

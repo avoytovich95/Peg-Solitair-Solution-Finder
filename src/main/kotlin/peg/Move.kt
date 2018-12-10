@@ -1,16 +1,8 @@
 package peg
 
-class Move(val x: Int, val y: Int, val dir: Direction) {
+import java.io.Serializable
 
-  override operator fun equals(other: Any?): Boolean =
-    hashCode() == other.hashCode()
-
-  override fun hashCode(): Int {
-    var result = x
-    result = 31 * result + y
-    result = 31 * result + dir.hashCode()
-    return result
-  }
+class Move(val x: Int, val y: Int, val dir: Direction): Serializable {
 
   fun toLongString() = "{$x, $y, $dir}"
 

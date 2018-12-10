@@ -36,14 +36,10 @@ class Controller(val frame: PegBoardFrame): Runnable {
 
   override fun run() {
     solver.fork()
-//    print("${phaser.registeredParties}: ")
     while (phaser.registeredParties != 0) {
       try {
         val moves = solved.poll(5, TimeUnit.SECONDS)
-//        println(Arrays.toString(moves))
-//        print("${phaser.registeredParties}: ")
         if (moves != null) {
-//          println("Solution found")
           frame.addSolution(moves)
         }
       } catch (e: TimeoutException) { continue }

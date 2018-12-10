@@ -69,7 +69,9 @@ class PegBoard(private val holeX: Int, private val holeY: Int): Cloneable {
   }
 
   fun move(move: Move): Boolean {
-    return if (move in moveList && !win) {
+    return if (moveList.any {
+        m -> m.x == move.x && m.y == move.y && m.dir == move.dir
+      } && !win) {
       when (move.dir) {
         Direction.NORTH -> {
           board[move.x][move.y].type = SpaceType.HOLE
@@ -229,4 +231,9 @@ class PegBoard(private val holeX: Int, private val holeY: Int): Cloneable {
     const val Y = 7
     const val TOTAL = 32
   }
+}
+
+fun main(args: Array<String>) {
+  val board = PegBoard()
+  println(board.moveList)
 }

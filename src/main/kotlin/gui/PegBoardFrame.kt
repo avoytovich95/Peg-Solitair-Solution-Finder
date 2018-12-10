@@ -1,6 +1,5 @@
 package gui
 
-import peg.Direction
 import peg.Move
 import peg.PegBoard
 import peg.SpaceType.*
@@ -144,27 +143,4 @@ class PegBoardFrame : JFrame(), ActionListener {
     }
   }
 
-}
-
-object Thing {
-
-  lateinit var frame: PegBoardFrame
-
-  @JvmStatic
-  fun main(args: Array<String>) {
-    SwingUtilities.invokeLater {
-      frame = PegBoardFrame()
-      frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-
-      val moves = arrayOf(
-        Move(3, 1, Direction.SOUTH),
-        Move(5, 2, Direction.WEST),
-        Move(2, 2, Direction.EAST)
-      )
-
-      frame.addSolution(moves)
-
-      frame.isVisible = true
-    }
-  }
 }
