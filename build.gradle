@@ -4,7 +4,7 @@ plugins {
     id 'application'
 }
 
-mainClassName = "main.Main"
+mainClassName = "cluster.Main"
 
 group 'Project-3'
 version '1.0-SNAPSHOT'

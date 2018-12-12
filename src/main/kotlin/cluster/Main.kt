@@ -23,9 +23,9 @@ object Main {
       frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
 
       createTasks()
-      Thread(PegClient(ServerData.wolf, wolfTask, frame)).start()
-      Thread(PegClient(ServerData.rho, rhoTask,  frame)).start()
-      Thread(PegClient(ServerData.altair, altairTask, frame)).start()
+      Thread(PegClient(ServerData.wolf, "Wolf", wolfTask, frame)).start()
+      Thread(PegClient(ServerData.rho, "Rho", rhoTask,  frame)).start()
+      Thread(PegClient(ServerData.altair, "Altair", altairTask, frame)).start()
 
       frame.isVisible = true
     }

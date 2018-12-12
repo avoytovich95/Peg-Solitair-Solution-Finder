@@ -8,5 +8,4 @@ object Server {
     Thread.sleep(60000)
     System.exit(0)
   }
-
 }

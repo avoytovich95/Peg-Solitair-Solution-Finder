@@ -6,18 +6,35 @@ import peg.Move
 import java.io.EOFException
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
+import java.net.ConnectException
 import java.net.Socket
 import java.util.*
 
-class PegClient(val ip: String, val task: Task, val frame: PegBoardFrame): Runnable {
+class PegClient(val ip: String, val name: String, val task: Task, val frame: PegBoardFrame): Runnable {
 
   private var socket: Socket? = null
 
   var outStream: ObjectOutputStream? = null
   var inStream: ObjectInputStream? = null
 
+  var tries = 0
+
   override fun run() {
-    socket = Socket(ip, ServerData.port)
+
+    while (true) {
+      try {
+        socket = Socket(ip, ServerData.port)
+        break
+      } catch (e: ConnectException) {
+        if (tries++ >= 5) {
+          println("Connection to $name failed")
+          return
+        }
+        Thread.sleep(2000)
+        println("Retrying connection to $name")
+      }
+    }
+//    socket = Socket(ip, ServerData.port)
 
     outStream = ObjectOutputStream(socket!!.getOutputStream())
     outStream!!.writeObject(task)
